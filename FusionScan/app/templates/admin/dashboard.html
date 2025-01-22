@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Student Attendance System{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard">
+    <h2>Admin Dashboard</h2>
+
+    <div class="admin-actions">
+        <h3>Manage Users</h3>
+        <a href="{{ url_for('admin.add_user') }}" class="add-user-button">Add User</a>
+    </div>
+
+    </div>
+{% endblock %}

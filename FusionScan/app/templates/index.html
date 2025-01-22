@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Student Attendance System{% endblock %}
+
+{% block content %}
+<div class="home-content">
+    <h2>Welcome to the Student Attendance System</h2>
+    <p>
+        This system helps in efficiently managing student attendance using facial recognition and thermal scanning technologies.
+    </p>
+
+    <div class="video-container">
+        <img src="{{ url_for('main.video_feed') }}" width="640" height="480" alt="Video Feed">
+    </div>
+
+    {% if current_user.is_authenticated %}
+        <div class="user-actions">
+            <a href="{{ url_for('main.scan_student') }}" class="scan-button">Start Scanning</a>
+            {% if current_user.is_admin %}
+                <a href="{{ url_for('admin.dashboard') }}" class="admin-button">Admin Access</a>
+                <form action="{{ url_for('main.restart_attendance') }}" method="post" class="restart-form">
+                    <button type="submit" class="restart-button">Restart Attendance</button>
+                </form>
+            {% endif %}
+        </div>
+        <h3>Attendance List (Today)</h3>
+        <table class="attendance-table">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>LRN</th>
+                    <th>Strand</th>
+                    <th>Status</th>
+                    <th>Time</th>
+                    {% if current_user.is_admin %}
+                        <th>Actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% if users %}
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.student_lrn }}</td>
+                            <td>{{ user.strand }}</td>
+                            <td>{{ user.attendance_status }}</td>
+                            <td>{{ user.attendance_time }}</td>
+                            {% if current_user.is_admin %}
+                                <td>
+                                    <form action="{{ url_for('main.delete_user', user_id=user.id) }}" method="post">
+                                        <button type="submit" class="delete-button">Delete</button>
+                                    </form>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="{% if current_user.is_admin %}6{% else %}5{% endif %}">No attendance records found for today.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        {% if current_user.is_admin %}
+            <div class="export-actions">
+                <a href="{{ url_for('main.export_attendance') }}" class="export-button">Export to Excel</a>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="auth-actions">
+            <p>Please login or register to start using the system.</p>
+            <a href="{{ url_for('auth.login') }}" class="login-button">Login</a>
+            <a href="{{ url_for('auth.register') }}" class="register-button">Register</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

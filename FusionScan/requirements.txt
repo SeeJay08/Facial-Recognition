@@ -1,0 +1,11 @@
+Flask
+Flask-SQLAlchemy
+Flask-Login
+Werkzeug
+python-dotenv
+mediapipe
+opencv-python-headless
+face-recognition
+numpy
+adafruit-blinka
+adafruit-circuitpython-mlx90614

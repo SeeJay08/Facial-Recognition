@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Add User - Student Attendance System{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Add User</h2>
+    <form action="{{ url_for('admin.add_user') }}" method="post">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="student_lrn">Student LRN:</label>
+            <input type="text" id="student_lrn" name="student_lrn" required>
+        </div>
+        <div class="form-group">
+            <label for="strand">Strand:</label>
+            <select id="strand" name="strand">
+                <option value="STEM">STEM</option>
+                <option value="ABM">ABM</option>
+                <option value="HUMSS">HUMSS</option>
+                <option value="GAS">GAS</option>
+                <option value="TVL">TVL</option>
+            </select>
+        </div>
+        <button type="submit" class="submit-button">Add User</button>
+    </form>
+</div>
+{% endblock %}
